@@ -1,0 +1,47 @@
+# Build results
+bin/
+obj/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# macOS system files
+.DS_Store
+
+# Playwright browser binaries and test artifacts
+playwright-report/
+test-results/
+bin-debug/
+pwsh.log
+*.log
+*.tsbuildinfo
+.playwright/
+
+# NuGet packages
+*.nupkg
+*.snupkg
+packages/
+.nuget/
+
+# Resharper (if installed)
+_ReSharper*/
+*.DotSettings.user
+
+# Rider IDE (if used)
+.idea/
+
+# Others
+*.swp
+*.tmp
+*.bak
+*.old
+*.orig
+
+# Secrets or config (if any custom added)
+appsettings.Development.json
+secrets.json
