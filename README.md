@@ -1,0 +1,226 @@
+# 🎮 PS5 Deal Locator
+
+<div align="center">
+
+![PS5 Banner](https://img.shields.io/badge/PS5-Deal%20Hunter-blue?style=for-the-badge&logo=playstation&logoColor=white)
+![Status](https://img.shields.io/badge/Status-Active%20Development-green?style=for-the-badge)
+![Stores](https://img.shields.io/badge/Stores-1%20(More%20Coming!)-orange?style=for-the-badge)
+
+**🔥 Find the best PS5 deals across the web - because every gamer deserves to play! 🔥**
+
+[🚀 Quick Start](#-quick-start) • [🏪 Supported Stores](#-supported-stores) • [🛣️ Roadmap](#️-roadmap) • [🤝 Contributing](#-contributing)
+
+</div>
+
+---
+
+## 🎯 The Mission
+
+> **"Born from frustration, built with passion."**
+
+This project started when my PS5 began overheating, making it completely unplayable. Instead of paying scalper prices or settling for overpriced bundles, I decided to build a solution that helps fellow gamers find legitimate deals across major retailers.
+
+**If you're struggling to find a reasonably priced PS5, this tool is for you.**
+
+---
+
+## ✨ Features
+
+- 🔍 **Smart Price Scraping** - Automatically finds current PS5 prices across stores
+- ⚡ **Lightning Fast** - Console app delivers results in seconds
+- 💰 **Best Price Comparison** - Shows the lowest price for each product
+- 🎯 **Clean Console Output** - Easy to read price listings
+- 🔧 **Modular Design** - Built with interfaces to easily add new stores
+- 📊 **Multiple Products** - Tracks standard consoles, digital editions, and bundles
+
+---
+
+## 🏪 Supported Stores
+
+| Store | Status | Price Tracking | Implementation |
+|-------|--------|----------------|----------------|
+| 🛒 **Best Buy** | ✅ Active | ✅ Yes | ✅ Complete |
+| 🎯 **Target** | 🔄 Planned | 🔄 Planned | 🔄 Coming Soon |
+| 🛍️ **Walmart** | 🔄 Planned | 🔄 Planned | 🔄 Coming Soon |
+| 📦 **Amazon** | 🔄 Planned | 🔄 Planned | 🔄 Coming Soon |
+| 🎮 **GameStop** | 🔄 Planned | 🔄 Planned | 🔄 Coming Soon |
+
+*More stores coming soon! Have a suggestion? [Open an issue!](../../issues)*
+
+---
+
+## 🚀 Quick Start
+
+### Prerequisites
+```bash
+# Make sure you have .NET 6.0+ installed
+dotnet --version
+```
+
+### Installation
+```bash
+# Clone the repository
+git clone https://github.com/yourusername/PS5-Deal-Locator.git
+cd PS5-Deal-Locator
+
+# Restore NuGet packages
+dotnet restore
+```
+
+### Usage
+```bash
+# Build and run the console app
+dotnet run
+
+# Watch the magic happen! 🎉
+```
+
+---
+
+## 📊 Sample Output
+
+```
+🎮 PS5 Deal Locator - Finding the best prices...
+
+🛒 BEST BUY
+├─ PS5 Console (Standard): $499.99
+├─ PS5 Console (Digital): $399.99
+└─ PS5 Spider-Man Bundle: $559.99
+
+💰 BEST DEALS FOUND:
+Standard Console: $499.99 (Best Buy)
+Digital Console: $399.99 (Best Buy)
+Spider-Man Bundle: $559.99 (Best Buy)
+
+⚡ Scan completed in 2.3 seconds
+```
+
+---
+
+## 🛣️ Roadmap
+
+### Phase 1: Foundation ✅
+- [x] Best Buy scraper implementation
+- [x] Basic price comparison
+- [x] Clean console output
+
+### Phase 2: Expansion 🔄
+- [ ] Add Target scraper implementation
+- [ ] Add Walmart scraper implementation  
+- [ ] Add Amazon scraper implementation
+- [ ] Multi-threading for faster scanning
+
+### Phase 3: Enhancement 🔮
+- [ ] Export results to JSON/CSV
+- [ ] Configuration file support
+- [ ] Price history logging
+- [ ] Command-line arguments
+
+---
+
+## 🔧 Technical Details
+
+**Built with:**
+- ☄️ C# .NET 6.0+
+- 🌐 HttpClient for web requests
+- 📊 HtmlAgilityPack for HTML parsing
+- ⚡ Async/await for performance
+- 🎯 Clean console application architecture
+
+**Architecture:**
+```
+PS5-Deal-Locator/
+├── Scrapers/
+│   ├── BestBuyScraper.cs    # Best Buy implementation
+│   └── IStoreScraper.cs     # Scraper interface
+├── Models/
+│   ├── Product.cs           # Product data model
+│   └── Store.cs            # Store information
+├── Services/
+│   └── PriceComparer.cs    # Price comparison logic
+├── Program.cs              # Main console application
+└── PS5-Deal-Locator.csproj # Project file
+```
+
+---
+
+## 🤝 Contributing
+
+Found a bug? Want to add a store? Have ideas for improvement? **I'd love your help!**
+
+### How to Contribute:
+1. 🍴 Fork the repository
+2. 🌟 Create a feature branch (`git checkout -b feature/AmazingFeature`)
+3. 💻 Make your changes
+4. ✅ Test thoroughly
+5. 📤 Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+6. 🚀 Push to the branch (`git push origin feature/AmazingFeature`)
+7. 🎉 Open a Pull Request
+
+### Contribution Ideas:
+- 🏪 Add new store scrapers
+- 🔔 Implement notification systems
+- 🎨 Improve output formatting
+- 📱 Build mobile integration
+- 🐛 Fix bugs and improve performance
+
+---
+
+## ⚠️ Important Notes
+
+- **Respectful Scraping**: This tool includes delays and follows robots.txt guidelines
+- **Personal Use**: Intended for personal deal hunting, not commercial reselling
+- **No Guarantees**: Prices and stock can change rapidly - always verify on the retailer's site
+- **Rate Limiting**: Built-in delays prevent overwhelming retailer servers
+
+---
+
+## 💡 Why This Project Matters
+
+The gaming community shouldn't have to choose between:
+- 💸 Paying scalper prices
+- 🎁 Buying overpriced bundles with unwanted games
+- ⏳ Waiting indefinitely for restocks
+
+This tool levels the playing field by automating the tedious process of checking multiple stores, giving you more time to actually **play games** instead of hunting for consoles.
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+## 🙏 Acknowledgments
+
+- **The Gaming Community** - for sharing restock tips and deal alerts
+- **Fellow Developers** - for open source scraping libraries and tools
+- **Retailers** - for maintaining public APIs and reasonable access policies
+
+---
+
+<div align="center">
+
+### 🎮 Happy Gaming! 🎮
+
+**If this tool helped you snag a PS5 deal, consider giving it a ⭐!**
+
+[![Star This Repo](https://img.shields.io/github/stars/yourusername/PS5-Deal-Locator?style=social)](../../stargazers)
+[![Follow Me](https://img.shields.io/github/followers/yourusername?style=social)](../../followers)
+
+*Built with 💜 by a gamer, for gamers*
+
+</div>
+
+---
+
+## 📞 Support
+
+Having issues? Found a bug? Want to chat about gaming?
+
+- 🐛 [Report Issues](../../issues)
+- 💬 [Start a Discussion](../../discussions)
+- 📧 [Email Me](mailto:your.email@example.com)
+
+**Remember: We're all in this together. Let's help each other find those deals! 🤝**
