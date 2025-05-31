@@ -22,8 +22,8 @@ public class ItemComparer : IItemComparer
                 var allProducts = items.Concat(otherItems).OrderBy(p => p.Price).ToList();
 
                 idealItems = allProducts
-                    .GroupBy(p => GetNormalizedTitle(p.Title))
-                    .SelectMany(g => g.OrderBy(p => p.Price).Take(2))
+                    .GroupBy(p => new { p.Store, NormalizedTitle = GetNormalizedTitle(p.Title) })
+                    .SelectMany(g => g.OrderBy(p => p.Price).Take(3))
                     .ToList();
             }
             catch (Exception ex)
@@ -83,5 +83,20 @@ public class ItemComparer : IItemComparer
         }
 
         return string.Join(" ", keyParts).Trim();
+    }
+
+    public string NormalizeSearchTerm(string searchTerm)
+    {
+        searchTerm = searchTerm.ToLower();
+
+        var keywords = new[] { "ps" };
+        var replacements = new[] { "Playstation " };
+
+        for (int i = 0; i < keywords.Length; i++)
+        {
+            searchTerm = searchTerm.Replace(keywords[i], replacements[i]);
+        }
+
+        return searchTerm.Trim();
     }
 }

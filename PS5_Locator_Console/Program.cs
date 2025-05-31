@@ -3,6 +3,7 @@ using System.IO;
 using System.Threading.Tasks;
 using Microsoft.Playwright;
 using PS5_Locator_Console.Helpers;
+using PS5_Locator_Console.Interfaces;
 using PS5_Locator_Console.Models;
 using PS5_Locator_Console.Services;
 
@@ -10,17 +11,26 @@ namespace PS5_Locator_Console;
 
 class Program
 {
+    private readonly IScraperHelper _scraperHelper;
+    private readonly IItemComparer _itemComparer;
+
+    public Program(IScraperHelper scraperHelper, IItemComparer itemComparer)
+    {
+        _scraperHelper = scraperHelper;
+        _itemComparer = itemComparer;
+    }
+
     public static async Task Main(string[] args)
     {
-        var _scraperHelper = new ScraperHelper();
-        var _itemComparer = new ItemComparer();
-        var _bestBuyScrapper = new BestBuyScrapper(_scraperHelper);
+        var scraperHelper = new ScraperHelper();
+        var itemComparer = new ItemComparer();
+        var _bestBuyScrapper = new BestBuyScrapper(scraperHelper, itemComparer);
 
         try
         {
             var bestBuyProducts = await _bestBuyScrapper.ScrapeBestBuyAsync(args);
 
-            var deals = _itemComparer.CompareItemsByPrice(bestBuyProducts, new List<ItemModel>());
+            var deals = itemComparer.CompareItemsByPrice(bestBuyProducts, new List<ItemModel>());
 
             foreach (var deal in deals)
             {

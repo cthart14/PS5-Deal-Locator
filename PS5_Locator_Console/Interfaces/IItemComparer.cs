@@ -7,4 +7,5 @@ public interface IItemComparer
 {
     List<ItemModel> CompareItemsByPrice(List<ItemModel> items, List<ItemModel> existingItems);
     string GetNormalizedTitle(string? title);
+    string NormalizeSearchTerm(string searchTerm);
 }
