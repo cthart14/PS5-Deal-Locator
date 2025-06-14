@@ -40,8 +40,8 @@ This project started when my PS5 began overheating, making it completely unplaya
 | Store | Status | Price Tracking | Implementation |
 |-------|--------|----------------|----------------|
 | 🛒 **Best Buy** | ✅ Active | ✅ Yes | ✅ Complete |
-| 🎯 **Target** | 🔄 Planned | 🔄 Planned | 🔄 Coming Soon |
-| 🛍️ **Walmart** | 🔄 Planned | 🔄 Planned | 🔄 Coming Soon |
+| 🎯 **Target** | 🔨 In Progress | 🔨 In Progress | 🔄 Coming Soon |
+| 🛍️ **Walmart** | ✅ Active | ✅ Yes | ✅ Complete |
 | 📦 **Amazon** | 🔄 Planned | 🔄 Planned | 🔄 Coming Soon |
 | 🎮 **GameStop** | 🔄 Planned | 🔄 Planned | 🔄 Coming Soon |
 
@@ -82,17 +82,27 @@ dotnet run
 ```
 🎮 PS5 Deal Locator - Finding the best prices...
 
-🛒 BEST BUY
+Scanning Stores for "search term"
+
+Found # items at "searched store"
+
+PRODUCTS FOUND:
+
+BEST BUY:
 ├─ PS5 Console (Standard): $499.99
 ├─ PS5 Console (Digital): $399.99
 └─ PS5 Spider-Man Bundle: $559.99
 
-💰 BEST DEALS FOUND:
+WALMART:
+├─ PS5 Console (Standard): $499.99
+├─ PS5 Console (Digital): $399.99
+└─ PS5 Spider-Man Bundle: $559.99
+
+BEST DEALS FOUND:
 Standard Console: $499.99 (Best Buy)
 Digital Console: $399.99 (Best Buy)
 Spider-Man Bundle: $559.99 (Best Buy)
 
-⚡ Scan completed in 2.3 seconds
 ```
 
 ---
@@ -106,7 +116,7 @@ Spider-Man Bundle: $559.99 (Best Buy)
 
 ### Phase 2: Expansion 🔄
 - [ ] Add Target scraper implementation
-- [ ] Add Walmart scraper implementation  
+- [x] Add Walmart scraper implementation  
 - [ ] Add Amazon scraper implementation
 - [ ] Multi-threading for faster scanning
 
@@ -131,13 +141,14 @@ Spider-Man Bundle: $559.99 (Best Buy)
 ```
 PS5-Deal-Locator/
 ├── Scrapers/
-│   ├── BestBuyScraper.cs    # Best Buy implementation
-│   └── IStoreScraper.cs     # Scraper interface
+│   ├── ...Scraper.cs    # All Store Scrapers implementation
+│   └── I...Scraper.cs   # All Store Scraper interface
 ├── Models/
-│   ├── Product.cs           # Product data model
-│   └── Store.cs            # Store information
-├── Services/
-│   └── PriceComparer.cs    # Price comparison logic
+│   ├── ProductModel.cs  # Product data model
+│   └── ItemModel.cs     # Item data model
+├── Helpers/
+│   |── ItemComparer.cs    # Price comparison logic
+|   └── ScraperHelper.cs  # Website Scraping help logic
 ├── Program.cs              # Main console application
 └── PS5-Deal-Locator.csproj # Project file
 ```
