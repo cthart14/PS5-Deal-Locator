@@ -1,4 +1,5 @@
 using System;
+using System.Reflection.Metadata.Ecma335;
 using System.Threading.Channels;
 using PS5_Locator_Console.Interfaces;
 using PS5_Locator_Console.Models;
@@ -7,32 +8,26 @@ namespace PS5_Locator_Console.Helpers;
 
 public class ItemComparer : IItemComparer
 {
-    public List<ItemModel> CompareItemsByPrice(List<ItemModel> items, List<ItemModel> otherItems)
+    public List<ItemModel> FindDeals(List<ItemModel> items)
     {
-        var idealItems = new List<ItemModel>();
+        // Handle null inputs
+        if (!items.Any())
+            return new List<ItemModel>();
 
-        if (items == null || otherItems == null || items.Count == 0 || otherItems.Count == 0)
+        try
         {
-            throw new ArgumentException("Items lists cannot be null or empty.");
+
+            var idealItems = items
+                .GroupBy(p => new { p.Store, NormalizedTitle = GetNormalizedTitle(p.Title) })
+                .SelectMany(g => g.OrderBy(p => p.Price).Take(3))
+                .ToList();
+            return idealItems;
         }
-        else
+        catch (Exception ex)
         {
-            try
-            {
-                var allProducts = items.Concat(otherItems).OrderBy(p => p.Price).ToList();
-
-                idealItems = allProducts
-                    .GroupBy(p => new { p.Store, NormalizedTitle = GetNormalizedTitle(p.Title) })
-                    .SelectMany(g => g.OrderBy(p => p.Price).Take(3))
-                    .ToList();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"An error occurred while comparing items: {ex.Message}");
-            }
+            Console.WriteLine($"An error occurred while comparing items: {ex.Message}");
+            return new List<ItemModel>();
         }
-
-        return idealItems;
     }
 
     public string GetNormalizedTitle(string? title)
@@ -89,12 +84,24 @@ public class ItemComparer : IItemComparer
     {
         searchTerm = searchTerm.ToLower();
 
-        var keywords = new[] { "ps" };
-        var replacements = new[] { "Playstation " };
+        var keywords = new[] { "ps5", "ps5 pro", "xboxsx", "xbox 1" };
+        var replacements = new[] { "Playstation 5", "Playstation 5 Pro", "XBOX Series X", "XBOX 1" };
 
         for (int i = 0; i < keywords.Length; i++)
         {
             searchTerm = searchTerm.Replace(keywords[i], replacements[i]);
+        }
+
+        var clensedSearchTerm = searchTerm.Replace(@"\d", "").Trim();
+
+        foreach (var replacement in replacements)
+        {
+            clensedSearchTerm = clensedSearchTerm.Replace(replacement, "");
+        }
+
+        if (clensedSearchTerm.Trim() == string.Empty)
+        {
+            searchTerm += " Console";
         }
 
         return searchTerm.Trim();

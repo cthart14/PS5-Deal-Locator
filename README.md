@@ -136,7 +136,7 @@ PS5-Deal-Locator/
 ├── Models/
 │   ├── Product.cs           # Product data model
 │   └── Store.cs            # Store information
-├── Services/
+├── Scrapers/
 │   └── PriceComparer.cs    # Price comparison logic
 ├── Program.cs              # Main console application
 └── PS5-Deal-Locator.csproj # Project file

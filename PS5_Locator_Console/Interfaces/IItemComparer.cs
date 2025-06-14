@@ -5,7 +5,7 @@ namespace PS5_Locator_Console.Interfaces;
 
 public interface IItemComparer
 {
-    List<ItemModel> CompareItemsByPrice(List<ItemModel> items, List<ItemModel> existingItems);
+    List<ItemModel> FindDeals(List<ItemModel> items);
     string GetNormalizedTitle(string? title);
     string NormalizeSearchTerm(string searchTerm);
 }
