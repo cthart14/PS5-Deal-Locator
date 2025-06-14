@@ -110,7 +110,7 @@ namespace PS5_Locator_Console.Scrapers
                 }
 
                 // Scroll to load more products
-                await _scraperHelper.ScrollAndLoadMoreAsync(page, 3, 800, 1000);
+                await _scraperHelper.ScrollAndLoadMoreAsync(page, 3, 800, 1500);
 
                 var items = await page.QuerySelectorAllAsync(
                     "div.mb0.ph0-xl.pt0-xl.bb.b--near-white.w-25.pb3-m.ph1"

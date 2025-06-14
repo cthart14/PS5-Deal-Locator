@@ -31,6 +31,14 @@ class Program
 
         try
         {
+            if (args == null || args.Length == 0)
+            {
+                Console.WriteLine("No search terms provided. Please provide search terms as command line arguments.");
+                return;
+            }
+
+            Console.WriteLine("\nSearching for products...");
+
             var bestBuyTask = _bestBuyScraper.ScrapeBestBuyAsync(args);
             var walmartTask = _walmartScraper.ScrapeWalmartAsync(args);
 
@@ -40,24 +48,39 @@ class Program
 
             if (bestBuyProducts.Any())
             {
-                bestBuyProducts = itemComparer.FindDeals(bestBuyProducts);
-                returnModel.bestBuy = bestBuyProducts;
+                bestBuyProducts = itemComparer.GetBestPrices(bestBuyProducts);
+                returnModel.best_Buy = bestBuyProducts;
             }
 
             if (walmartProducts.Any())
             {
-                walmartProducts = itemComparer.FindDeals(walmartProducts);
+                walmartProducts = itemComparer.GetBestPrices(walmartProducts);
                 returnModel.walmart = walmartProducts;
             }
 
             var props = typeof(ProductsModel).GetProperties();
+            var deals = new List<ItemModel>();
 
+            // Check if any property has items and display results
             foreach (var prop in props)
             {
                 if (prop.GetValue(returnModel) is List<ItemModel> items && items.Any())
                 {
                     DisplayResults(returnModel);
+                    deals = itemComparer.GetBestDeals(returnModel);
                     break;
+                }
+            }
+
+            if (deals.Any())
+            {
+                Console.WriteLine("\nBEST DEALS:");
+                Console.WriteLine(new string('-', 50));
+                foreach (var deal in deals)
+                {
+                    Console.WriteLine(
+                        $"|--- {deal.Title?.ToUpper()} | ${deal.Price} | ({deal.Store?.ToUpper()})\n    \u2514-- {deal.Link} \n"
+                    );
                 }
             }
         }
@@ -76,11 +99,12 @@ class Program
             var items = prop.GetValue(model) as List<ItemModel>;
             if (items != null && items.Any())
             {
-                Console.WriteLine($"{prop.Name.ToUpper()} Results:");
+                Console.WriteLine($"\n{prop.Name.Replace("_", " ").ToUpper()} RESULTS:");
+                Console.WriteLine(new string('-', 50));
                 foreach (var item in items)
                 {
                     Console.WriteLine(
-                        $"|--- {item.Title.ToUpper()} | ${item.Price}\n \t|- {item.Link}"
+                        $"|--- {item.Title?.ToUpper()} | ${item.Price}\n    \u2514-- {item.Link} \n"
                     );
                 }
             }

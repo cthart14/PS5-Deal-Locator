@@ -8,7 +8,7 @@ namespace PS5_Locator_Console.Helpers;
 
 public class ItemComparer : IItemComparer
 {
-    public List<ItemModel> FindDeals(List<ItemModel> items)
+    public List<ItemModel> GetBestPrices(List<ItemModel> items)
     {
         // Handle null inputs
         if (!items.Any())
@@ -16,7 +16,6 @@ public class ItemComparer : IItemComparer
 
         try
         {
-
             var idealItems = items
                 .GroupBy(p => new { p.Store, NormalizedTitle = GetNormalizedTitle(p.Title) })
                 .SelectMany(g => g.OrderBy(p => p.Price).Take(3))
@@ -28,6 +27,29 @@ public class ItemComparer : IItemComparer
             Console.WriteLine($"An error occurred while comparing items: {ex.Message}");
             return new List<ItemModel>();
         }
+    }
+
+    public List<ItemModel> GetBestDeals(ProductsModel products)
+    {
+        var deals = new List<ItemModel>();
+
+        if (products != null)
+        {
+            var props = typeof(ProductsModel).GetProperties();
+
+            foreach (var prop in props)
+            {
+                var items = prop.GetValue(products) as List<ItemModel>;
+                if (items != null && items.Any())
+                {
+                    deals.AddRange(items.OrderBy(item => item.Price).Take(3));
+                }
+            }
+
+            deals = deals.OrderBy(item => item.Price).Take(5).ToList();
+        }
+
+        return deals;
     }
 
     public string GetNormalizedTitle(string? title)
@@ -52,7 +74,7 @@ public class ItemComparer : IItemComparer
         // Build a simplified grouping key
         var keyParts = new List<string>();
         if (isPS5)
-            keyParts.Add("ps5");
+            keyParts.Add("playstation 5");
         if (isXbox)
             keyParts.Add("xbox");
         if (isConsole)
@@ -84,8 +106,16 @@ public class ItemComparer : IItemComparer
     {
         searchTerm = searchTerm.ToLower();
 
-        var keywords = new[] { "ps5", "ps5 pro", "xboxsx", "xbox 1" };
-        var replacements = new[] { "Playstation 5", "Playstation 5 Pro", "XBOX Series X", "XBOX 1" };
+        var keywords = new[] { "ps5", "pro", "slim", "digital", "xboxsx", "xbox 1" };
+        var replacements = new[]
+        {
+            "Playstation 5",
+            "Pro",
+            "Slim",
+            "Digital",
+            "XBOX Series X",
+            "XBOX 1",
+        };
 
         for (int i = 0; i < keywords.Length; i++)
         {

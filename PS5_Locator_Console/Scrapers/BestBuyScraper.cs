@@ -111,7 +111,7 @@ namespace PS5_Locator_Console.Scrapers
                 }
 
                 // Scroll to load more products
-                await _scraperHelper.ScrollAndLoadMoreAsync(page, 3, 800, 1000);
+                await _scraperHelper.ScrollAndLoadMoreAsync(page, 3, 800, 1500);
 
                 var items = await page.QuerySelectorAllAsync("li.product-list-item");
 
@@ -136,9 +136,7 @@ namespace PS5_Locator_Console.Scrapers
                 Console.WriteLine($"Error scraping search term '{searchTerm}': {ex.Message}");
             }
 
-            Console.WriteLine(
-                $"Found {products.Count} products for search term '{searchTerm}' at Best Buy."
-            );
+            Console.WriteLine($"Found {products.Count} products for {searchTerm} at Best Buy.");
             return products;
         }
 
