@@ -218,7 +218,7 @@ This tool levels the playing field by automating the tedious process of checking
 [![Star This Repo](https://img.shields.io/github/stars/cthart14/PS5-Deal-Locator?style=social)](../../stargazers)
 [![Follow Me](https://img.shields.io/github/followers/cthart14?style=social)](../../followers)
 
- 👤 [Check Out My Profile](https://www.github.com/cthart14/cthart14)
+ 👤 [Check Out My Profile](https://www.github.com/cthart14)
 
 *Built by a gamer, for gamers*
 
