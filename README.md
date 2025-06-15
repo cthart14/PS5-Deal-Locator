@@ -40,9 +40,9 @@ This project started when my PS5 began overheating, making it completely unplaya
 | Store | Status | Price Tracking | Implementation |
 |-------|--------|----------------|----------------|
 | 🛒 **Best Buy** | ✅ Active | ✅ Yes | ✅ Complete |
-| 🎯 **Target** | 🔨 In Progress | 🔨 In Progress | 🔄 Coming Soon |
+| 🎯 **Target** | ✅ Active | ✅ Yes | ✅ Complete |
 | 🛍️ **Walmart** | ✅ Active | ✅ Yes | ✅ Complete |
-| 📦 **Amazon** | 🔄 Planned | 🔄 Planned | 🔄 Coming Soon |
+| 📦 **Amazon** | 🔨 In Progress | 🔨 In Progress | 🔄 Coming Soon |
 | 🎮 **GameStop** | 🔄 Planned | 🔄 Planned | 🔄 Coming Soon |
 
 *More stores coming soon! Have a suggestion? [Open an issue!](../../issues)*
@@ -70,7 +70,10 @@ dotnet restore
 ### Usage
 ```bash
 # Build and run the console app
-dotnet run
+dotnet run "Your Product"
+
+# If searching for multiple products 
+dotnet run "Product", "Other Product" ..etc.
 
 # Watch the magic happen! 🎉
 ```
@@ -80,7 +83,7 @@ dotnet run
 ## 📊 Sample Output
 
 ```
-🎮 PS5 Deal Locator - Finding the best prices...
+PS5 Deal Locator - Finding the best prices...
 
 Scanning Stores for "search term"
 
@@ -115,10 +118,11 @@ Spider-Man Bundle: $559.99 (Best Buy)
 - [x] Clean console output
 
 ### Phase 2: Expansion 🔄
-- [ ] Add Target scraper implementation
+- [x] Add Target scraper implementation
 - [x] Add Walmart scraper implementation  
 - [ ] Add Amazon scraper implementation
-- [ ] Multi-threading for faster scanning
+- [ ] Add GameStop scraper implementation  
+- [x] Multi-threading for faster scanning
 
 ### Phase 3: Enhancement 🔮
 - [ ] Export results to JSON/CSV
@@ -193,20 +197,7 @@ Found a bug? Want to add a store? Have ideas for improvement? **I'd love your he
 
 ---
 
-## 💡 Why This Project Matters
-
-The gaming community shouldn't have to choose between:
-- 💸 Paying scalper prices
-- 🎁 Buying overpriced bundles with unwanted games
-- ⏳ Waiting indefinitely for restocks
-
 This tool levels the playing field by automating the tedious process of checking multiple stores, giving you more time to actually **play games** instead of hunting for consoles.
-
----
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ---
 
@@ -224,10 +215,12 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 **If this tool helped you snag a PS5 deal, consider giving it a ⭐!**
 
-[![Star This Repo](https://img.shields.io/github/stars/yourusername/PS5-Deal-Locator?style=social)](../../stargazers)
-[![Follow Me](https://img.shields.io/github/followers/yourusername?style=social)](../../followers)
+[![Star This Repo](https://img.shields.io/github/stars/cthart14/PS5-Deal-Locator?style=social)](../../stargazers)
+[![Follow Me](https://img.shields.io/github/followers/cthart14?style=social)](../../followers)
 
-*Built with 💜 by a gamer, for gamers*
+ 👤 [Check Out My Profile](https://www.github.com/cthart14)
+
+*Built by a gamer, for gamers*
 
 </div>
 
@@ -241,4 +234,3 @@ Having issues? Found a bug? Want to chat about gaming?
 - 💬 [Start a Discussion](../../discussions)
 - 📧 [Email Me](mailto:your.email@example.com)
 
-**Remember: We're all in this together. Let's help each other find those deals! 🤝**
