@@ -11,13 +11,13 @@ namespace PS5_Locator_Console.Scrapers
     public class WalmartScraper
     {
         private readonly IScraperHelper _scraperHelper;
-        private readonly IItemComparer _itemComparer;
+        private readonly IItemHelper _ItemHelper;
 
-        public WalmartScraper(IScraperHelper scraperHelper, IItemComparer itemComparer)
+        public WalmartScraper(IScraperHelper scraperHelper, IItemHelper ItemHelper)
         {
             _scraperHelper =
                 scraperHelper ?? throw new ArgumentNullException(nameof(scraperHelper));
-            _itemComparer = itemComparer ?? throw new ArgumentNullException(nameof(itemComparer));
+            _ItemHelper = ItemHelper ?? throw new ArgumentNullException(nameof(ItemHelper));
         }
 
         public async Task<List<ItemModel>> ScrapeWalmartAsync(string[] args)
@@ -68,7 +68,7 @@ namespace PS5_Locator_Console.Scrapers
 
             try
             {
-                var normalizedSearchTerm = _itemComparer.NormalizeSearchTerm(searchTerm);
+                var normalizedSearchTerm = _ItemHelper.NormalizeSearchTerm(searchTerm);
 
                 await using var context = await browser.NewContextAsync(
                     new BrowserNewContextOptions
@@ -96,6 +96,8 @@ namespace PS5_Locator_Console.Scrapers
                 );
 
                 // Wait for products to load
+                Task.Delay(6000).Wait();
+
                 try
                 {
                     await page.WaitForSelectorAsync(
@@ -105,7 +107,7 @@ namespace PS5_Locator_Console.Scrapers
                 }
                 catch (TimeoutException)
                 {
-                    Console.WriteLine($"No products found for search term: {searchTerm}");
+                    Console.WriteLine($"No products found for {searchTerm} at Walmart");
                     return products;
                 }
 
@@ -120,8 +122,8 @@ namespace PS5_Locator_Console.Scrapers
                 {
                     try
                     {
-                        var product = await ExtractProductInfo(item);
-                        if (IsValidProduct(product, searchTerm, normalizedSearchTerm))
+                        var product = await ExtractWalmartProductInfo(item);
+                        if (_ItemHelper.IsValidProduct(product, searchTerm, normalizedSearchTerm))
                         {
                             products.Add(product);
                         }
@@ -141,7 +143,7 @@ namespace PS5_Locator_Console.Scrapers
             return products;
         }
 
-        private async Task<ItemModel> ExtractProductInfo(IElementHandle item)
+        private async Task<ItemModel> ExtractWalmartProductInfo(IElementHandle item)
         {
             var titleElement = await item.QuerySelectorAsync(
                 "span[data-automation-id='product-title']"
@@ -192,26 +194,6 @@ namespace PS5_Locator_Console.Scrapers
                 Link = link,
                 Store = "Walmart",
             };
-        }
-
-        private bool IsValidProduct(
-            ItemModel product,
-            string originalSearchTerm,
-            string normalizedSearchTerm
-        )
-        {
-            if (string.IsNullOrEmpty(product.Title) || !product.Price.HasValue)
-            {
-                return false;
-            }
-
-            // Use fuzzy matching to ensure relevance
-            var titleMatchScore = Math.Max(
-                Fuzz.PartialRatio(normalizedSearchTerm, product.Title),
-                Fuzz.PartialRatio(originalSearchTerm, product.Title)
-            );
-
-            return titleMatchScore > 65; // Lowered threshold slightly for better results
         }
     }
 }

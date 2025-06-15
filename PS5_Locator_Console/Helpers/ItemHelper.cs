@@ -1,12 +1,13 @@
 using System;
 using System.Reflection.Metadata.Ecma335;
 using System.Threading.Channels;
+using FuzzySharp;
 using PS5_Locator_Console.Interfaces;
 using PS5_Locator_Console.Models;
 
 namespace PS5_Locator_Console.Helpers;
 
-public class ItemComparer : IItemComparer
+public class ItemHelper : IItemHelper
 {
     public List<ItemModel> GetBestPrices(List<ItemModel> items)
     {
@@ -135,5 +136,25 @@ public class ItemComparer : IItemComparer
         }
 
         return searchTerm.Trim();
+    }
+
+    public bool IsValidProduct(
+        ItemModel product,
+        string originalSearchTerm,
+        string normalizedSearchTerm
+    )
+    {
+        if (string.IsNullOrEmpty(product.Title) || !product.Price.HasValue)
+        {
+            return false;
+        }
+
+        // Use fuzzy matching to ensure relevance
+        var titleMatchScore = Math.Max(
+            Fuzz.PartialRatio(normalizedSearchTerm, product.Title),
+            Fuzz.PartialRatio(originalSearchTerm, product.Title)
+        );
+
+        return titleMatchScore > 75;
     }
 }

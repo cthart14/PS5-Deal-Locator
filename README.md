@@ -153,7 +153,7 @@ PS5-Deal-Locator/
 │   ├── ProductModel.cs  # Product data model
 │   └── ItemModel.cs     # Item data model
 ├── Helpers/
-│   |── ItemComparer.cs    # Price comparison logic
+│   |── ItemHelper.cs    # Price comparison logic
 |   └── ScraperHelper.cs  # Website Scraping help logic
 >>>>>>> e1de35bda508325092d611e5680b5c134d7fe8e6
 ├── Program.cs              # Main console application

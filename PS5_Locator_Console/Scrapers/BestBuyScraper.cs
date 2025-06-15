@@ -11,13 +11,13 @@ namespace PS5_Locator_Console.Scrapers
     public class BestBuyScraper
     {
         private readonly IScraperHelper _scraperHelper;
-        private readonly IItemComparer _itemComparer;
+        private readonly IItemHelper _ItemHelper;
 
-        public BestBuyScraper(IScraperHelper scraperHelper, IItemComparer itemComparer)
+        public BestBuyScraper(IScraperHelper scraperHelper, IItemHelper ItemHelper)
         {
             _scraperHelper =
                 scraperHelper ?? throw new ArgumentNullException(nameof(scraperHelper));
-            _itemComparer = itemComparer ?? throw new ArgumentNullException(nameof(itemComparer));
+            _ItemHelper = ItemHelper ?? throw new ArgumentNullException(nameof(ItemHelper));
         }
 
         public async Task<List<ItemModel>> ScrapeBestBuyAsync(string[] args)
@@ -68,7 +68,7 @@ namespace PS5_Locator_Console.Scrapers
 
             try
             {
-                var normalizedSearchTerm = _itemComparer.NormalizeSearchTerm(searchTerm);
+                var normalizedSearchTerm = _ItemHelper.NormalizeSearchTerm(searchTerm);
 
                 await using var context = await browser.NewContextAsync(
                     new BrowserNewContextOptions
@@ -97,6 +97,8 @@ namespace PS5_Locator_Console.Scrapers
                 );
 
                 // Wait for products to load
+                Task.Delay(6000).Wait();
+
                 try
                 {
                     await page.WaitForSelectorAsync(
@@ -106,7 +108,7 @@ namespace PS5_Locator_Console.Scrapers
                 }
                 catch (TimeoutException)
                 {
-                    Console.WriteLine($"No products found for search term: {searchTerm}");
+                    Console.WriteLine($"No products found for {searchTerm} at Best Buy");
                     return products;
                 }
 
@@ -119,8 +121,8 @@ namespace PS5_Locator_Console.Scrapers
                 {
                     try
                     {
-                        var product = await ExtractProductInfo(item);
-                        if (IsValidProduct(product, searchTerm, normalizedSearchTerm))
+                        var product = await ExtractBestBuyProductInfo(item);
+                        if (_ItemHelper.IsValidProduct(product, searchTerm, normalizedSearchTerm))
                         {
                             products.Add(product);
                         }
@@ -140,7 +142,7 @@ namespace PS5_Locator_Console.Scrapers
             return products;
         }
 
-        private async Task<ItemModel> ExtractProductInfo(IElementHandle item)
+        private async Task<ItemModel> ExtractBestBuyProductInfo(IElementHandle item)
         {
             var titleElement = await item.QuerySelectorAsync("h2.product-title");
             var priceElement = await item.QuerySelectorAsync(
@@ -181,26 +183,6 @@ namespace PS5_Locator_Console.Scrapers
                 Link = link,
                 Store = "Best Buy",
             };
-        }
-
-        private bool IsValidProduct(
-            ItemModel product,
-            string originalSearchTerm,
-            string normalizedSearchTerm
-        )
-        {
-            if (string.IsNullOrEmpty(product.Title) || !product.Price.HasValue)
-            {
-                return false;
-            }
-
-            // Use fuzzy matching to ensure relevance
-            var titleMatchScore = Math.Max(
-                Fuzz.PartialRatio(normalizedSearchTerm, product.Title),
-                Fuzz.PartialRatio(originalSearchTerm, product.Title)
-            );
-
-            return titleMatchScore > 60;
         }
     }
 }

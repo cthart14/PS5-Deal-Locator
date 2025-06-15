@@ -12,20 +12,21 @@ namespace PS5_Locator_Console;
 class Program
 {
     private readonly IScraperHelper _scraperHelper;
-    private readonly IItemComparer _itemComparer;
+    private readonly IItemHelper _ItemHelper;
 
-    public Program(IScraperHelper scraperHelper, IItemComparer itemComparer)
+    public Program(IScraperHelper scraperHelper, IItemHelper ItemHelper)
     {
         _scraperHelper = scraperHelper;
-        _itemComparer = itemComparer;
+        _ItemHelper = ItemHelper;
     }
 
     public static async Task Main(string[] args)
     {
         var scraperHelper = new ScraperHelper();
-        var itemComparer = new ItemComparer();
-        var _bestBuyScraper = new BestBuyScraper(scraperHelper, itemComparer);
-        var _walmartScraper = new WalmartScraper(scraperHelper, itemComparer);
+        var ItemHelper = new ItemHelper();
+        var _bestBuyScraper = new BestBuyScraper(scraperHelper, ItemHelper);
+        var _walmartScraper = new WalmartScraper(scraperHelper, ItemHelper);
+        var _targetScraper = new TargetScraper(scraperHelper, ItemHelper);
 
         var returnModel = new ProductsModel();
 
@@ -33,7 +34,9 @@ class Program
         {
             if (args == null || args.Length == 0)
             {
-                Console.WriteLine("No search terms provided. Please provide search terms as command line arguments.");
+                Console.WriteLine(
+                    "No search terms provided. Please provide search terms as command line arguments."
+                );
                 return;
             }
 
@@ -41,21 +44,29 @@ class Program
 
             var bestBuyTask = _bestBuyScraper.ScrapeBestBuyAsync(args);
             var walmartTask = _walmartScraper.ScrapeWalmartAsync(args);
+            var targetTask = _targetScraper.ScrapeTargetAsync(args);
 
-            var results = await Task.WhenAll(bestBuyTask, walmartTask);
+            var results = await Task.WhenAll(bestBuyTask, walmartTask, targetTask);
             var bestBuyProducts = results[0];
             var walmartProducts = results[1];
+            var targetProducts = results[2];
 
             if (bestBuyProducts.Any())
             {
-                bestBuyProducts = itemComparer.GetBestPrices(bestBuyProducts);
+                bestBuyProducts = ItemHelper.GetBestPrices(bestBuyProducts);
                 returnModel.best_Buy = bestBuyProducts;
             }
 
             if (walmartProducts.Any())
             {
-                walmartProducts = itemComparer.GetBestPrices(walmartProducts);
+                walmartProducts = ItemHelper.GetBestPrices(walmartProducts);
                 returnModel.walmart = walmartProducts;
+            }
+
+            if (targetProducts.Any())
+            {
+                targetProducts = ItemHelper.GetBestPrices(targetProducts);
+                returnModel.target = targetProducts;
             }
 
             var props = typeof(ProductsModel).GetProperties();
@@ -67,7 +78,7 @@ class Program
                 if (prop.GetValue(returnModel) is List<ItemModel> items && items.Any())
                 {
                     DisplayResults(returnModel);
-                    deals = itemComparer.GetBestDeals(returnModel);
+                    deals = ItemHelper.GetBestDeals(returnModel);
                     break;
                 }
             }
