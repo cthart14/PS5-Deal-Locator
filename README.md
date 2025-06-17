@@ -42,8 +42,8 @@ This project started when my PS5 began overheating, making it completely unplaya
 | 🛒 **Best Buy** | ✅ Active | ✅ Yes | ✅ Complete |
 | 🎯 **Target** | ✅ Active | ✅ Yes | ✅ Complete |
 | 🛍️ **Walmart** | ✅ Active | ✅ Yes | ✅ Complete |
-| 📦 **Amazon** | 🔨 In Progress | 🔨 In Progress | 🔄 Coming Soon |
-| 🎮 **GameStop** | 🔄 Planned | 🔄 Planned | 🔄 Coming Soon |
+| 📦 **Amazon** | ✅ Active | ✅ Yes | ✅ Complete |
+| 🎮 **GameStop** | 🔨 In Progress | 🔨 In Progress | 🔄 Coming Soon |
 
 *More stores coming soon! Have a suggestion? [Open an issue!](../../issues)*
 
@@ -120,7 +120,7 @@ Spider-Man Bundle: $559.99 (Best Buy)
 ### Phase 2: Expansion 🔄
 - [x] Add Target scraper implementation
 - [x] Add Walmart scraper implementation  
-- [ ] Add Amazon scraper implementation
+- [x] Add Amazon scraper implementation
 - [ ] Add GameStop scraper implementation  
 - [x] Multi-threading for faster scanning
 
@@ -146,20 +146,19 @@ Spider-Man Bundle: $559.99 (Best Buy)
 PS5-Deal-Locator/
 ├── Scrapers/
 │   ├── ...Scraper.cs    # All Store Scrapers implementation
-│   └── I...Scraper.cs   # All Store Scraper interface
+├── Interfaces
+│   ├──  I...Helper.cs   # All Helper logic interfaces for depedency logic
 ├── Models/
-<<<<<<< HEAD
 │   ├── Product.cs           # Product data model
 │   └── Store.cs            # Store information
 ├── Scrapers/
 │   └── PriceComparer.cs    # Price comparison logic
-=======
+├── Helpers/
 │   ├── ProductModel.cs  # Product data model
 │   └── ItemModel.cs     # Item data model
 ├── Helpers/
 │   |── ItemHelper.cs    # Price comparison logic
 |   └── ScraperHelper.cs  # Website Scraping help logic
->>>>>>> e1de35bda508325092d611e5680b5c134d7fe8e6
 ├── Program.cs              # Main console application
 └── PS5-Deal-Locator.csproj # Project file
 ```
