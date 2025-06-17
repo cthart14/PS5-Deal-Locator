@@ -27,6 +27,7 @@ class Program
         var _bestBuyScraper = new BestBuyScraper(scraperHelper, ItemHelper);
         var _walmartScraper = new WalmartScraper(scraperHelper, ItemHelper);
         var _targetScraper = new TargetScraper(scraperHelper, ItemHelper);
+        var _amazonScraper = new AmazonScraper(scraperHelper, ItemHelper);
 
         var returnModel = new ProductsModel();
 
@@ -45,11 +46,13 @@ class Program
             var bestBuyTask = _bestBuyScraper.ScrapeBestBuyAsync(args);
             var walmartTask = _walmartScraper.ScrapeWalmartAsync(args);
             var targetTask = _targetScraper.ScrapeTargetAsync(args);
+            var amazonTask = _amazonScraper.ScrapeAmazonAsync(args);
 
-            var results = await Task.WhenAll(bestBuyTask, walmartTask, targetTask);
+            var results = await Task.WhenAll(bestBuyTask, walmartTask, targetTask, amazonTask);
             var bestBuyProducts = results[0];
             var walmartProducts = results[1];
             var targetProducts = results[2];
+            var amazonProducts = results[3];
 
             if (bestBuyProducts.Any())
             {
@@ -67,6 +70,12 @@ class Program
             {
                 targetProducts = ItemHelper.GetBestPrices(targetProducts);
                 returnModel.target = targetProducts;
+            }
+
+            if (amazonProducts.Any())
+            {
+                amazonProducts = ItemHelper.GetBestPrices(amazonProducts);
+                returnModel.amazon = amazonProducts;
             }
 
             var props = typeof(ProductsModel).GetProperties();

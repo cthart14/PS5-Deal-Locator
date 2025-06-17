@@ -96,7 +96,7 @@ namespace PS5_Locator_Console.Scrapers
                 );
 
                 // Wait for products to load
-                Task.Delay(6000).Wait();
+                Task.Delay(10000).Wait();
 
                 try
                 {

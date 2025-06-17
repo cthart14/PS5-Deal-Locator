@@ -21,7 +21,7 @@ public class ItemHelper : IItemHelper
                 .GroupBy(p => new { p.Store, NormalizedTitle = GetNormalizedTitle(p.Title) })
                 .SelectMany(g => g.OrderBy(p => p.Price).Take(3))
                 .ToList();
-            return idealItems;
+            return idealItems.OrderBy(item => item.Price).ToList();
         }
         catch (Exception ex)
         {
