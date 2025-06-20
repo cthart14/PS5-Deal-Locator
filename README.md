@@ -41,7 +41,7 @@ This project started when my PS5 began overheating, making it completely unplaya
 | 🎯 **Target** | ✅ Active | ✅ Yes | ✅ Complete |
 | 🛍️ **Walmart** | ✅ Active | ✅ Yes | ✅ Complete |
 | 📦 **Amazon** | ✅ Active | ✅ Yes | ✅ Complete |
-| 🎮 **GameStop** | 🔨 In Progress | 🔨 In Progress | 🔄 Coming Soon |
+| 🎮 **GameStop** | ✅ Active | ✅ Yes | ✅ Complete |
 
 *More stores coming soon! Have a suggestion? [Open an issue!](../../issues)*
 
@@ -119,7 +119,7 @@ Spider-Man Bundle: $559.99 (Best Buy)
 - [x] Add Target scraper implementation
 - [x] Add Walmart scraper implementation  
 - [x] Add Amazon scraper implementation
-- [ ] Add GameStop scraper implementation  
+- [x] Add GameStop scraper implementation  
 - [x] Multi-threading for faster scanning
 
 ### Phase 3: Enhancement 🔮
