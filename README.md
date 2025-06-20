@@ -16,9 +16,7 @@
 
 ## 🎯 The Mission
 
-> **"Born from frustration, built with passion."**
-
-This project started when my PS5 began overheating, making it completely unplayable. Instead of paying scalper prices or settling for overpriced bundles, I decided to build a solution that helps fellow gamers find legitimate deals across major retailers.
+This project started when my PS5 began overheating, making it completely unplayable. Instead of paying outragous prices or settling for overpriced bundles, I decided to build a solution that helps fellow gamers find legitimate deals across major retailers.
 
 **If you're struggling to find a reasonably priced PS5, this tool is for you.**
 
@@ -210,7 +208,6 @@ This tool levels the playing field by automating the tedious process of checking
 
 <div align="center">
 
-### 🎮 Happy Gaming! 🎮
 
 **If this tool helped you snag a PS5 deal, consider giving it a ⭐!**
 

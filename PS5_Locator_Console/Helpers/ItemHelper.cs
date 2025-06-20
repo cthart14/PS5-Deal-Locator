@@ -21,6 +21,12 @@ public class ItemHelper : IItemHelper
                 .GroupBy(p => new { p.Store, NormalizedTitle = GetNormalizedTitle(p.Title) })
                 .SelectMany(g => g.OrderBy(p => p.Price).Take(3))
                 .ToList();
+
+            idealItems = idealItems
+                .GroupBy(p => new { p.Title, p.Price })
+                .Select(g => g.First())
+                .ToList();
+
             return idealItems.OrderBy(item => item.Price).ToList();
         }
         catch (Exception ex)
@@ -47,7 +53,7 @@ public class ItemHelper : IItemHelper
                 }
             }
 
-            deals = deals.OrderBy(item => item.Price).Take(5).ToList();
+            deals = deals.OrderBy(item => item.Price).Take(10).ToList();
         }
 
         return deals;
@@ -150,10 +156,7 @@ public class ItemHelper : IItemHelper
         }
 
         // Use fuzzy matching to ensure relevance
-        var titleMatchScore = Math.Max(
-            Fuzz.PartialRatio(normalizedSearchTerm, product.Title),
-            Fuzz.PartialRatio(originalSearchTerm, product.Title)
-        );
+        var titleMatchScore = Fuzz.PartialRatio(normalizedSearchTerm, product.Title);
 
         return titleMatchScore > 75;
     }

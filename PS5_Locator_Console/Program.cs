@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.Playwright;
 using PS5_Locator_Console.Helpers;
@@ -28,6 +29,7 @@ class Program
         var _walmartScraper = new WalmartScraper(scraperHelper, ItemHelper);
         var _targetScraper = new TargetScraper(scraperHelper, ItemHelper);
         var _amazonScraper = new AmazonScraper(scraperHelper, ItemHelper);
+        var _gameStopScraper = new GameStopScraper(scraperHelper, ItemHelper);
 
         var returnModel = new ProductsModel();
 
@@ -47,12 +49,20 @@ class Program
             var walmartTask = _walmartScraper.ScrapeWalmartAsync(args);
             var targetTask = _targetScraper.ScrapeTargetAsync(args);
             var amazonTask = _amazonScraper.ScrapeAmazonAsync(args);
+            var gameStopTask = _gameStopScraper.ScrapeGameStopAsync(args);
 
-            var results = await Task.WhenAll(bestBuyTask, walmartTask, targetTask, amazonTask);
+            var results = await Task.WhenAll(
+                bestBuyTask,
+                walmartTask,
+                targetTask,
+                amazonTask,
+                gameStopTask
+            );
             var bestBuyProducts = results[0];
             var walmartProducts = results[1];
             var targetProducts = results[2];
             var amazonProducts = results[3];
+            var gameStopProducts = results[4];
 
             if (bestBuyProducts.Any())
             {
@@ -78,6 +88,12 @@ class Program
                 returnModel.amazon = amazonProducts;
             }
 
+            if (gameStopProducts.Any())
+            {
+                gameStopProducts = ItemHelper.GetBestPrices(gameStopProducts);
+                returnModel.gamestop = gameStopProducts;
+            }
+
             var props = typeof(ProductsModel).GetProperties();
             var deals = new List<ItemModel>();
 
@@ -88,6 +104,7 @@ class Program
                 {
                     DisplayResults(returnModel);
                     deals = ItemHelper.GetBestDeals(returnModel);
+                    PrintJson(returnModel);
                     break;
                 }
             }
@@ -129,5 +146,30 @@ class Program
                 }
             }
         }
+    }
+
+    public static void PrintJson(ProductsModel returnModel)
+    {
+        var allItems = new List<ItemModel>();
+        var props = typeof(ProductsModel).GetProperties();
+
+        // Serialize the data to JSON
+        var options = new JsonSerializerOptions
+        {
+            WriteIndented = true, // for pretty-printing
+        };
+
+        foreach (var prop in props)
+        {
+            if (prop.GetValue(returnModel) is List<ItemModel> items && items.Any())
+            {
+                allItems.AddRange(items);
+            }
+        }
+
+        var json = JsonSerializer.Serialize(allItems.OrderBy(i => i.Price).ToList(), options);
+
+        File.WriteAllText("PS5_Locator_Console/Client/results.json", json);
+        Console.WriteLine("\nResults saved to results.json");
     }
 }
