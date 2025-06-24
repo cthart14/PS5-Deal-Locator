@@ -4,7 +4,7 @@
 
 ![PS5 Banner](https://img.shields.io/badge/PS5-Deal%20Hunter-blue?style=for-the-badge&logo=playstation&logoColor=white)
 ![Status](https://img.shields.io/badge/Status-Active%20Development-green?style=for-the-badge)
-![Stores](https://img.shields.io/badge/Stores-1%20(More%20Coming!)-orange?style=for-the-badge)
+![Stores](https://img.shields.io/badge/Stores-5%20(More%20Coming!)-orange?style=for-the-badge)
 
 **🔥 Find the best PS5 deals across the web - because every gamer deserves to play! 🔥**
 
