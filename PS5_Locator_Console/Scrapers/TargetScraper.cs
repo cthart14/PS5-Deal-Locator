@@ -142,10 +142,12 @@ public class TargetScraper
             "span.sc-67b4d80d-3.dCgssf.h-text-bold.h-text-lg.h-margin-r-tiny.h-text-nowrap"
         );
         var linkElement = await item.QuerySelectorAsync("a");
+        var imageElement = await item.QuerySelectorAsync("img");
 
         var title = titleElement != null ? (await titleElement.InnerTextAsync()).Trim() : null;
         var priceText = priceElement != null ? (await priceElement.InnerTextAsync()).Trim() : null;
         var link = linkElement != null ? await linkElement.GetAttributeAsync("href") : null;
+        var image = imageElement != null ? await imageElement.GetAttributeAsync("src") : null;
 
         decimal? price = null;
         if (!string.IsNullOrEmpty(priceText))
@@ -174,6 +176,7 @@ public class TargetScraper
             Price = price,
             Link = link,
             Store = "Target",
+            Image = image,
         };
     }
 }

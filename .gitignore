@@ -45,3 +45,7 @@ _ReSharper*/
 # Secrets or config (if any custom added)
 appsettings.Development.json
 secrets.json
+
+
+# Output files
+results.json

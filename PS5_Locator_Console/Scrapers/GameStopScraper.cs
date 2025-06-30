@@ -138,10 +138,12 @@ public class GameStopScraper
         var titleElement = await item.QuerySelectorAsync("div.render-tile-name");
         var priceElement = await item.QuerySelectorAsync("div.render-sale-price");
         var linkElement = await item.QuerySelectorAsync("a");
+        var imageElement = await item.QuerySelectorAsync("div.render-tile-image");
 
         var title = titleElement != null ? (await titleElement.InnerTextAsync()).Trim() : null;
         var priceText = priceElement != null ? (await priceElement.InnerTextAsync()).Trim() : null;
         var link = linkElement != null ? await linkElement.GetAttributeAsync("href") : null;
+        var image = imageElement != null ? await imageElement.GetAttributeAsync("style") : null;
 
         decimal? price = null;
         if (!string.IsNullOrEmpty(priceText))
@@ -164,12 +166,27 @@ public class GameStopScraper
             link = "https://www.gamestop.com" + link;
         }
 
+        if (!string.IsNullOrEmpty(image))
+        {
+            int openParen = image.IndexOf('(');
+            if (openParen >= 0)
+            {
+                int closeParen = image.IndexOf(')', openParen + 1);
+                if (closeParen > openParen)
+                {
+                    // +1 to skip the '(' itself
+                    image = image.Substring(openParen + 1, closeParen - openParen - 1);
+                }
+            }
+        }
+
         return new ItemModel
         {
             Title = title,
             Price = price,
             Link = link,
             Store = "GameStop",
+            Image = image,
         };
     }
 }

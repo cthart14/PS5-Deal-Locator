@@ -152,9 +152,11 @@ namespace PS5_Locator_Console.Scrapers
                 "div[data-automation-id='product-price']"
             );
             var linkElement = await item.QuerySelectorAsync("a");
+            var imageElement = await item.QuerySelectorAsync("img");
 
             var title = titleElement != null ? (await titleElement.InnerTextAsync()).Trim() : null;
             var link = linkElement != null ? await linkElement.GetAttributeAsync("href") : null;
+            var image = imageElement != null ? await imageElement.GetAttributeAsync("src") : null;
             string priceText = "";
 
             if (priceElement != null)
@@ -193,6 +195,7 @@ namespace PS5_Locator_Console.Scrapers
                 Price = price,
                 Link = link,
                 Store = "Walmart",
+                Image = image,
             };
         }
     }

@@ -113,7 +113,7 @@ namespace PS5_Locator_Console.Scrapers
                 }
 
                 // Scroll to load more products
-                await _scraperHelper.ScrollAndLoadMoreAsync(page, 3, 800, 1500);
+                await _scraperHelper.ScrollAndLoadMoreAsync(page, 3, 800, 2000);
 
                 var items = await page.QuerySelectorAllAsync("li.product-list-item");
 
@@ -149,11 +149,13 @@ namespace PS5_Locator_Console.Scrapers
                 "div.customer-price.medium, span.sr-only:has-text('current price')"
             );
             var linkElement = await item.QuerySelectorAsync("a");
+            var imageElement = await item.QuerySelectorAsync("img");
 
             var title = titleElement != null ? (await titleElement.InnerTextAsync()).Trim() : null;
             var priceText =
                 priceElement != null ? (await priceElement.InnerTextAsync()).Trim() : null;
             var link = linkElement != null ? await linkElement.GetAttributeAsync("href") : null;
+            var image = imageElement != null ? await imageElement.GetAttributeAsync("src") : null;
 
             decimal? price = null;
             if (!string.IsNullOrEmpty(priceText))
@@ -182,6 +184,7 @@ namespace PS5_Locator_Console.Scrapers
                 Price = price,
                 Link = link,
                 Store = "Best Buy",
+                Image = image,
             };
         }
     }

@@ -1,45 +1,253 @@
-body{
-    font-family: Georgia, 'Times New Roman', Times, serif;
-    background-color: #f9f9f9;
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #0f1419 0%, #1e3a8a 50%, #312e81 100%);
+    min-height: 100vh;
+    margin: 0;
     padding: 20px;
+    color: white;
 }
 
 .page-title {
     text-align: center;
-    font-size: 2em;
-    color: #333;
+    font-size: 3em;
+    font-weight: bold;
+    margin-bottom: 40px;
+    background: linear-gradient(45deg, #00d4ff, #ffffff, #ffffff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 0 30px rgba(0, 212, 255, 0.3);
+    letter-spacing: 2px;
 }
 
 #deals-container {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-evenly;
-    align-items: baseline;
-    gap: 10px;
+    justify-content: center;
+    align-items: stretch;
+    gap: 25px;
+    max-width: 1400px;
+    margin: 0 auto;
 }
 
 .deal-card {
-    border: 1px solid #ccc;
-    border-radius: 12px;
-    padding: 16px;
-    background-color: white;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    height: 350px;
-    width : 500px;
-  }
+    background: linear-gradient(145deg, #1a1f2e 0%, #2d3748 100%);
+    border: 2px solid transparent;
+    border-radius: 16px;
+    padding: 24px;
+    width: 380px;
+    height: 400px; /* Fixed height for all cards */
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 
+        0 10px 25px rgba(0, 0, 0, 0.3),
+        0 0 0 1px rgba(255, 255, 255, 0.05);
+    display: flex;
+    flex-direction: column;
+}
 
-  .deal-card a{
+.deal-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, transparent, rgba(0, 212, 255, 0.1), transparent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.deal-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    border-color: #00d4ff;
+    box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.4),
+        0 0 30px rgba(0, 212, 255, 0.3),
+        0 0 0 1px rgba(0, 212, 255, 0.5);
+}
+
+.deal-card:hover::before {
+    opacity: 1;
+}
+
+.card-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    overflow: hidden; /* Prevents content from overflowing the card */
+}
+
+.card-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    overflow-y: auto; /* Makes the body scrollable if content overflows */
+}
+
+.deal-card h3 {
+    margin: 0 0 16px 0;
+    font-size: 1.3em;
+    font-weight: 600;
+    line-height: 1.4;
+    color: #ffffff;
+    transition: color 0.3s ease;
+    flex-shrink: 0;
+    max-height: 3.6em; /* About 2 lines */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Show 2 lines, then ellipsis */
+    line-clamp: 2; /* Standard property for compatibility */
+    -webkit-box-orient: vertical;
+}
+
+.card-footer {
+    flex-shrink: 0; /* Prevents footer from shrinking */
+    margin-top: auto; /* Pushes to bottom */
+}
+
+.deal-card:hover h3 {
+    color: #00d4ff;
+}
+
+.deal-card h3 a {
     text-decoration: none;
     color: inherit;
-  }
+    display: block;
+    transition: all 0.3s ease;
+}
 
-  .deal-card a :hover {
-    text-decoration: underline;
+.deal-card h3 a:hover {
+    text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+}
+
+.price-container {
+    background: linear-gradient(90deg, #00d4ff, #0066cc);
+    padding: 12px 20px;
+    border-radius: 25px;
+    margin: 8px 0;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.price-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.deal-card:hover .price-container::before {
+    left: 100%;
+}
+
+.price-container strong {
+    font-size: 1.1em;
+    color: #0f1419;
+    font-weight: 700;
+    text-shadow: none;
+}
+
+.price-container a:hover {
     cursor: pointer;
-  }
-  
-  .deal-card img {
+}
+
+.price-value {
+    font-size: 1.8em;
+    font-weight: 800;
+    color: #0f1419;
+    margin-left: 8px;
+    text-shadow: none;
+}
+
+.store-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 8px;
+    padding: 8px 16px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    font-size: 0.95em;
+    transition: background 0.3s ease;
+    flex-shrink: 0;
+}
+
+.deal-card:hover .store-info {
+    background: rgba(0, 212, 255, 0.1);
+}
+
+.store-info strong {
+    color: #00d4ff;
+    font-weight: 600;
+}
+
+.store-name {
+    color: #e2e8f0;
+    font-weight: 500;
+}
+
+.deal-card img {
     max-width: 100%;
+    max-height: 180px;      /* Limit image height */
+    width: auto;
     height: auto;
-    border-radius: 8px;
-  }
+    object-fit: contain;    /* Ensure the whole image is visible */
+    border-radius: 12px;
+    margin: 16px 0;
+    transition: transform 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    align-self: center;
+    flex-shrink: 0;     
+}
+
+.deal-card:hover img {
+    transform: scale(1.05);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .page-title {
+        font-size: 2.2em;
+        margin-bottom: 30px;
+    }
+    
+    .deal-card {
+        width: 100%;
+        max-width: 400px;
+    }
+    
+    #deals-container {
+        gap: 20px;
+        padding: 0 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 15px;
+    }
+    
+    .page-title {
+        font-size: 1.8em;
+    }
+    
+    .deal-card {
+        padding: 20px;
+    }
+    
+    .price-value {
+        font-size: 1.6em;
+    }
+}

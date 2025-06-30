@@ -47,7 +47,6 @@ public class AmazonScraper
                 Console.WriteLine($"Searching Amazon for: {arg}");
                 var products = await ScrapeSearchTerm(browser, arg);
                 cleanedProducts.AddRange(products);
-
             }
         }
         catch (Exception ex)
@@ -141,10 +140,12 @@ public class AmazonScraper
         );
         var priceElement = await item.QuerySelectorAsync("span.a-offscreen");
         var linkElement = await item.QuerySelectorAsync("a");
+        var imageElement = await item.QuerySelectorAsync("img");
 
         var title = titleElement != null ? (await titleElement.InnerTextAsync()).Trim() : null;
         var priceText = priceElement != null ? (await priceElement.InnerTextAsync()).Trim() : null;
         var link = linkElement != null ? await linkElement.GetAttributeAsync("href") : null;
+        var image = imageElement != null ? await imageElement.GetAttributeAsync("src") : null;
 
         decimal? price = null;
         if (!string.IsNullOrEmpty(priceText))
@@ -173,6 +174,7 @@ public class AmazonScraper
             Price = price,
             Link = link,
             Store = "Amazon",
+            Image = image,
         };
     }
 }
