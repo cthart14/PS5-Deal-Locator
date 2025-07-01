@@ -53,6 +53,9 @@ This project started when my PS5 began overheating, making it completely unplaya
 ```bash
 # Make sure you have .NET 6.0+ installed
 dotnet --version
+
+# To see dynamic results download extension:
+Live Server (Five Server)
 ```
 
 ### Installation
@@ -80,6 +83,7 @@ dotnet run "Product", "Other Product" ..etc.
 
 ## 📊 Sample Output
 
+#In Console 
 ```
 PS5 Deal Locator - Finding the best prices...
 
@@ -106,6 +110,11 @@ Spider-Man Bundle: $559.99 (Best Buy)
 
 ```
 
+![Dynamic Page](.Demo/images/dynamic-output.png)
+
+
+
+
 ---
 
 ## 🛣️ Roadmap
@@ -123,7 +132,7 @@ Spider-Man Bundle: $559.99 (Best Buy)
 - [x] Multi-threading for faster scanning
 
 ### Phase 3: Enhancement 🔮
-- [ ] Export results to JSON/CSV
+- [x] Export results to JSON/CSV
 - [x] Configuration file support
 - [ ] Price history logging
 - [x] Command-line arguments
