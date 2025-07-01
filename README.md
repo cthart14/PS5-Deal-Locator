@@ -83,7 +83,7 @@ dotnet run "Product", "Other Product" ..etc.
 
 ## 📊 Sample Output
 
-#In Console 
+### In Console 
 ```
 PS5 Deal Locator - Finding the best prices...
 
@@ -110,7 +110,8 @@ Spider-Man Bundle: $559.99 (Best Buy)
 
 ```
 
-![Dynamic Page](.Demo/images/dynamic-output.png)
+###  Dynamic output
+![Dynamic Page](Demo/images/dynamic-output.png)
 
 
 
