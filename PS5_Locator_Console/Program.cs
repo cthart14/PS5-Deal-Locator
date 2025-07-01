@@ -169,7 +169,7 @@ class Program
 
         var json = JsonSerializer.Serialize(allItems.OrderBy(i => i.Price).ToList(), options);
 
-        File.WriteAllText("PS5_Locator_Console/Client/results.json", json);
+        File.WriteAllText("./Client/results.json", json);
         Console.WriteLine("\nResults saved to results.json");
     }
 }
