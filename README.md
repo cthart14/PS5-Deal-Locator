@@ -58,7 +58,7 @@ dotnet --version
 ### Installation
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/PS5-Deal-Locator.git
+git clone https://github.com/cthart14/PS5-Deal-Locator.git
 cd PS5-Deal-Locator
 
 # Restore NuGet packages
