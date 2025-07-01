@@ -1,4 +1,5 @@
 # Build results
+publish/
 bin/
 obj/
 *.user
