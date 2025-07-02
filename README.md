@@ -137,7 +137,9 @@ Spider-Man Bundle: $559.99 (Best Buy)
 - [x] Configuration file support
 - [ ] Price history logging
 - [x] Command-line arguments
-- [ ] API Intergration
+- [ ] Email Results
+- [ ] Scale up to genral app for a wider range of products
+
 
 ---
 
